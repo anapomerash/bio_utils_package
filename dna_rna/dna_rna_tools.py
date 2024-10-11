@@ -1,6 +1,5 @@
 from typing import List, Union
 
-
 COMP_DICT = {
     "A": "T",
     "T": "A",
@@ -17,14 +16,14 @@ COMP_DICT = {
 
 def transcribe(sequence: str) -> str:
     """
-    Транскрибирует ДНК-последовательность в РНК.
+    Transcribes a DNA sequence into RNA.
 
-    :param sequence: Строка с последовательностью ДНК.
-    :return: Транскрибированная последовательность РНК.
-    :raises ValueError: Если последовательность содержит 'U'.
+    :param sequence: A string representing the DNA sequence.
+    :return: The transcribed RNA sequence.
+    :raises ValueError: If the sequence contains 'U'.
     """
     if "U" in sequence.upper():
-        raise ValueError("Нельзя транскрибировать РНК-последовательность.")
+        raise ValueError("Cannot transcribe an RNA sequence.")
 
     transcribed = ""
     for nucleotide in sequence:
@@ -39,24 +38,24 @@ def transcribe(sequence: str) -> str:
 
 def reverse(sequence: str) -> str:
     """
-    Разворачивает последовательность.
+    Reverses the given sequence.
 
-    :param sequence: Строка с последовательностью.
-    :return: Развёрнутая последовательность.
+    :param sequence: A string representing the sequence.
+    :return: The reversed sequence.
     """
     return sequence[::-1]
 
 
 def complement(sequence: str) -> str:
     """
-    Возвращает комплементарную последовательность.
+    Returns the complementary sequence.
 
-    :param sequence: Строка с последовательностью ДНК или РНК.
-    :return: Комплементарная последовательность.
-    :raises ValueError: Если последовательность содержит недопустимые символы.
+    :param sequence: A string representing the DNA or RNA sequence.
+    :return: The complementary sequence.
+    :raises ValueError: If the sequence contains invalid characters.
     """
     if not is_valid_seq(sequence):
-        raise ValueError(f"Некорректная последовательность: {sequence}")
+        raise ValueError(f"Invalid sequence: {sequence}")
 
     complement_seq = ""
     for nuc in sequence:
@@ -67,21 +66,21 @@ def complement(sequence: str) -> str:
 
 def reverse_complement(sequence: str) -> str:
     """
-    Возвращает обратную комплементарную последовательность.
+    Returns the reverse complementary sequence.
 
-    :param sequence: Строка с последовательностью ДНК или РНК.
-    :return: Обратная комплементарная последовательность.
-    :raises ValueError: Если последовательность содержит недопустимые символы.
+    :param sequence: A string representing the DNA or RNA sequence.
+    :return: The reverse complementary sequence.
+    :raises ValueError: If the sequence contains invalid characters.
     """
     return reverse(complement(sequence))
 
 
 def is_valid_seq(sequence: str) -> bool:
     """
-    Проверяет корректность последовательности нуклеиновых кислот.
+    Checks the validity of a nucleotide sequence.
 
-    :param sequence: Строка с последовательностью.
-    :return: True, если последовательность корректна, иначе False.
+    :param sequence: A string representing the sequence.
+    :return: True if the sequence is valid, otherwise False.
     """
     dna_bases = set("ATGCatgc")
     rna_bases = set("AUGCaugc")

@@ -1,71 +1,94 @@
 # BioUtils Package
 
-**BioUtils** — это пакет биоинформатических утилит для работы с нуклеиновыми кислотами и FASTQ-сиквенсами.
+**BioUtils** — is a bioinformatics utilities package designed for working with nucleic acids and FASTQ sequences.
 
-## Содержание
+## Contents
 
-- [Установка](#установка)
-- [Использование](#использование)
-  - [Работа с ДНК/РНК](#работа-с-днк-и-рнк)
-  - [Фильтрация FASTQ](#фильтрация-fastq)
-  - [Трансляция РНК](#трансляция-рнк)
-- [Структура пакета](#структура-пакета)
-- [Контакты](#контакты)
+-   [Installation](#installation)
+-   [Usage](#usage)
+    -   [DNA/RNA Tools](#dna-rna-tools)
+    -   [FASTQ Filtering](#fastq-filtering)
+    -   [RNA Translation](#rna-translation)
+    -   [Bioinformatics File Processing](#bioinformatics-file-processing)
+-   [Package Structure](#package-structure)
+-   [Contacts](#contacts)
 
-## Установка
+## Installation {#installation}
 
-Пакет можно установить, клонировав репозиторий и установив необходимые зависимости.
+You can install the package by cloning the repository and setting up the necessary dependencies.
 
-```bash
-git clone git@github.com:anapomerash/bio_utils_package.git
-cd bio_utils_package
+``` bash
+git clone git@github.com:anapomerash/bio_utils_package.git && cd bio_utils_package
 ```
-## Использование
 
-### Работа с ДНК/РНК
+## Usage {#usage}
 
-Функция **run_dna_rna_tools** позволяет выполнять различные операции над нуклеиновыми последовательностями.
+### DNA/RNA Tools
 
-```python
+The **run_dna_rna_tools function** allows you to perform various operations on nucleotide sequences.
+
+``` python
 from bio_utils import run_dna_rna_tools
-# Транскрипция ДНК в РНК
+
+# Transcribe DNA to RNA
 rna = run_dna_rna_tools('ATG', 'transcribe')
-print(rna)  # Вывод: AUG
+print(rna)  # Output: AUG
 
-# Получение обратной комплементарной последовательности
+# Get reverse complement of DNA
 rev_comp = run_dna_rna_tools('ATG', 'reverse_complement')
-print(rev_comp)  # Вывод: CAT
+print(rev_comp)  # Output: CAT
 
-# Обработка нескольких последовательностей
+# Process multiple sequences
 results = run_dna_rna_tools('ATG', 'aT', 'reverse')
-print(results)  # Вывод: ['GTA', 'Ta']
+print(results)  # Output: ['GTA', 'Ta']
 ```
 
-### Фильтрация FASTQ
+### FASTQ Filtering {#fastq-filtering}
 
-Функция **filter_fastq** фильтрует FASTQ-сиквенсов по заданным критериям.
+The **filter_fastq** function filters FASTQ sequences based on specified criteria.
 
-```python
+#### Filtering Example
+
+``` python
 from bio_utils import filter_fastq
 
-# Пример данных
-seqs = {
-    "seq1": ("ATGCGT", "IIIIII"),
-    "seq2": ("ATGCGU", "!!!!!"),
-    "seq3": ("ATGC", "####")
-}
+# Define input and output FASTQ file paths
+input_fastq = 'example_data/example_fastq.fastq'
+output_fastq = 'filtered/output.fastq'
 
-# Фильтрация сиквенсов с GC содержанием от 20 до 80%, длиной не менее 4 и средним качеством >= 30
-filtered = filter_fastq(seqs, gc_bounds=(20, 80), length_bounds=(4, 100), quality_threshold=30)
-print(filtered)
-# Вывод: {'seq1': ('ATGCGT', 'IIIIII')}
+# Filter sequences with GC content between 20-80%, length between 50-1000, and average quality >= 30
+filter_fastq(
+    input_fastq=input_fastq,
+    output_fastq=output_fastq,
+    gc_bounds=(20, 80),
+    length_bounds=(50, 1000),
+    quality_threshold=30
+)
+
+print("FASTQ filtering completed. Filtered sequences saved to 'filtered/output.fastq'.")
 ```
 
-### Трансляция РНК
+#### Expected Output (**filtered/output.fastq**):
 
-Функция **translate_rna* позволяет перевести РНК-последовательность в аминокислотную цепь.
+```         
+@SRX079804:1:SRR292678:1:1101:21885:21885 1:N:0:1 BH:ok
+ACAGCAACATAAACATGATGGGATGGCGTAAGCCCCCGAGATATCAGTTTACCCAGGATAAGAGATTAAATTATGAGCAACATTATTAA
++SRX079804:1:SRR292678:1:1101:21885:21885 1:N:0:1 BH:ok
+FGGGFGGGFGGGFGDFGCEBB@CCDFDDFFFFBFFGFGEFDFFFF;D@DD>C@DDGGGDFGDGG?GFGFEGFGGEF@FDGGGFGFBGGD
+@SRX079804:1:SRR292678:1:1101:105156:105156 1:N:0:1 BH:ok
+ACTGCTGAGCTTAAATGGCGGCAGTCTGACGGTTACCAACGGGGGCACTTCAACCGGTTCGTTAACGGGGAGCGGAGAGCTGA
++SRX079804:1:SRR292678:1:1101:105156:105156 1:N:0:1 BH:ok
+GFFEGGFGGGGEGGGGGGGGGFDD=DDE7EDD6CD?FEDEE@EBEFEE.DD5DDD@B<7>/0543C?BEE?@@BE<B?/B>@;
+```
 
-```python
+Only sequences that meet the specified criteria are included in the output.
+
+### RNA Translation
+
+The **translate_rna** function translates an RNA sequence into an amino acid chain.
+
+
+``` python
 from bio_utils import translate_rna
 
 # Пример РНК-последовательности
@@ -76,9 +99,41 @@ protein = translate_rna(rna_seq)
 print(protein)  # Вывод: MAIVMGR*KGAR*
 ```
 
-## Структура пакета
+## Bioinformatics File Processing
 
-```python
+The **bio_files_processor.py** script contains functions for processing various bioinformatics files, such as converting FASTA files and parsing BLAST output.
+
+### Convert Multiline FASTA to Oneline FASTA
+
+Converts a multi-line FASTA file into a single-line FASTA file.
+
+``` bash
+python bio_files_processor.py convert example_data/example_multiline_fasta.fasta filtered/output_oneline.fasta
+``` 
+
+### Expected Output:
+
+``` bash
+Created directory: filtered
+Converted example_data/example_multiline_fasta.fasta to filtered/output_oneline.fasta successfully.
+``` 
+
+### Parse BLAST Output
+
+Parses a BLAST output file to extract unique protein names and saves them sorted alphabetically.
+
+``` bash
+python bio_files_processor.py parse example_data/example_blast_results.txt filtered/blast_parsed.txt
+``` 
+### Expected Output:
+
+``` bash
+Created directory: filtered
+Parsed BLAST output from example_data/example_blast_results.txt and saved to filtered/blast_parsed.txt successfully.
+``` 
+## Package Structure
+
+``` python
 bio_utils_package/
 ├── README.md
 ├── bio_utils.py
@@ -93,17 +148,32 @@ bio_utils_package/
 ├── translation/
 │   ├── __init__.py
 │   ├── translation_utils.py
+├── bio_files_processor.py
+├── example_data/
+│   ├── example_fastq.fastq
+│   ├── example_blast_results.txt
+│   ├── example_multiline_fasta.fasta
+│   ├── example_gbk.gbk
+├── filtered/
+│   ├── output.fastq
+│   ├── blast_parsed.txt
+│   ├── output_oneline.fasta
+│   ├── selected_genes.fasta
+├── .gitignore
 ├── flake8.png
 └── pytest.png
 ```
 
-- **bio_utils.py**: Главный скрипт с основными функциями
-- **dna_rna/**: Модуль для работы с ДНК/РНК
-- **fastq/**: Модуль для работы с FASTQ-сиквенсами
-- **translation/**: Модуль для трансляции РНК в аминокислоты
-- **example_data.py**: Пример данных для тестирования
-- **flake8.png и pytest.png**: Скриншоты успешного прохождения проверок
+-   **bio_utils.py**: Main script containing core functions
+-   **dna_rna/**: Module for DNA/RNA operations
+-   **fastq/**: Module for handling FASTQ sequences
+-   **translation/**: Module for RNA translation
+-   **bio_files_processor.py**: Script for processing bioinformatics files (FASTA conversion, BLAST parsing)
+-   **example_data/**: Sample input data for testing.
+-   **filtered/**: Directory for storing filtered and processed data
 
-## Контакты
-Если у вас возникли вопросы или предложения, пожалуйста, свяжитесь с нами:
-anapomerash@gmail.com - Померанец Анастасия, разработчик
+## Contacts
+
+If you have any questions or suggestions, please contact us:
+
+anapomerash@gmail.com - Anastasia Pomerash, Senior Developer
