@@ -1,81 +1,83 @@
 # BioUtils Package
 
-**BioUtils** — это пакет биоинформатических утилит для работы с нуклеиновыми кислотами и FASTQ-сиквенсами.
+**BioUtils** is a package of bioinformatics utilities for working with nucleic acids and FASTQ sequences.
 
-## Содержание
+## Contents
 
-- [Установка](#установка)
-- [Использование](#использование)
-  - [Работа с ДНК/РНК](#работа-с-днк-и-рнк)
-  - [Фильтрация FASTQ](#фильтрация-fastq)
-  - [Трансляция РНК](#трансляция-рнк)
-- [Структура пакета](#структура-пакета)
-- [Контакты](#контакты)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Working with DNA/RNA](#working-with-DNA-RNA)
+  - [FASTQ Filtering](#fastq-filtering)
+  - [RNA Translation](#rna-translation)
+- [Package Structure](#package-structure)
+- [Contacts](#contacts)
 
-## Установка
+## Installation
 
-Пакет можно установить, клонировав репозиторий и установив необходимые зависимости.
+You can install the package by cloning the repository and installing the necessary dependencies.
 
 ```bash
 git clone git@github.com:anapomerash/bio_utils_package.git && cd bio_utils_package
 ```
-## Использование
+## Usage
 
-### Работа с ДНК/РНК
+### Working with DNA/RNA
 
-Функция **run_dna_rna_tools** позволяет выполнять различные операции над нуклеиновыми последовательностями.
+The **run_dna_rna_tools** function allows you to perform various operations on nucleic acid sequences.
 
 ```python
 from bio_utils import run_dna_rna_tools
-# Транскрипция ДНК в РНК
+
+# Transcription of DNA to RNA
 rna = run_dna_rna_tools('ATG', 'transcribe')
-print(rna)  # Вывод: AUG
+print(rna)  # Output: AUG
 
-# Получение обратной комплементарной последовательности
+# Getting the reverse complement sequence
 rev_comp = run_dna_rna_tools('ATG', 'reverse_complement')
-print(rev_comp)  # Вывод: CAT
+print(rev_comp)  # Output: CAT
 
-# Обработка нескольких последовательностей
+# Processing multiple sequences
 results = run_dna_rna_tools('ATG', 'aT', 'reverse')
-print(results)  # Вывод: ['GTA', 'Ta']
+print(results)  # Output: ['GTA', 'Ta']
+
 ```
 
-### Фильтрация FASTQ
+### FASTQ Filtering
 
-Функция **filter_fastq** фильтрует FASTQ-сиквенсов по заданным критериям.
+The **filter_fastq** function filters FASTQ sequences based on specified criteria.
 
 ```python
 from bio_utils import filter_fastq
 
-# Пример данных
+# Example data
 seqs = {
     "seq1": ("ATGCGT", "IIIIII"),
     "seq2": ("ATGCGU", "!!!!!"),
     "seq3": ("ATGC", "####")
 }
 
-# Фильтрация сиквенсов с GC содержанием от 20 до 80%, длиной не менее 4 и средним качеством >= 30
+# Filtering sequences with GC content between 20% and 80%, length of at least 4, and average quality >= 30
 filtered = filter_fastq(seqs, gc_bounds=(20, 80), length_bounds=(4, 100), quality_threshold=30)
 print(filtered)
-# Вывод: {'seq1': ('ATGCGT', 'IIIIII')}
+# Output: {'seq1': ('ATGCGT', 'IIIIII')}
 ```
 
-### Трансляция РНК
+### RNA Translation
 
-Функция **translate_rna* позволяет перевести РНК-последовательность в аминокислотную цепь.
+The **translate_rna** function translates an RNA sequence into a chain of amino acids.
 
 ```python
 from bio_utils import translate_rna
 
-# Пример РНК-последовательности
+# Example RNA sequence
 rna_seq = "AUGGCCAUUGUAAUGGGCCGCUGAAAGGGUGCCCGAUUUUAA"
 
-# Трансляция РНК в аминокислотную цепь
+# Translating RNA to amino acid chain
 protein = translate_rna(rna_seq)
-print(protein)  # Вывод: MAIVMGR*KGAR*
+print(protein)  # Output: MAIVMGR*KGAR*
 ```
 
-## Структура пакета
+## Package Structure
 
 ```python
 bio_utils_package/
@@ -96,13 +98,14 @@ bio_utils_package/
 └── pytest.png
 ```
 
-- **bio_utils.py**: Главный скрипт с основными функциями
-- **dna_rna/**: Модуль для работы с ДНК/РНК
-- **fastq/**: Модуль для работы с FASTQ-сиквенсами
-- **translation/**: Модуль для трансляции РНК в аминокислоты
-- **example_data.py**: Пример данных для тестирования
-- **flake8.png и pytest.png**: Скриншоты успешного прохождения проверок
+- **bio_utils.py**: Main script containing core functions
+- **dna_rna/**: Module for working with DNA/RNA
+- **fastq/**: Module for working with FASTQ sequences
+- **translation/**: Module for translating RNA into amino acids
+- **example_data.py**: Example data for testing
+- **flake8.png и pytest.png**: Screenshots of successful linting and testing
 
-## Контакты
-Если у вас возникли вопросы или предложения, пожалуйста, свяжитесь с нами:
-anapomerash@gmail.com - Померанец Анастасия, старший разработчик
+## Contacts
+If you have any questions or suggestions, please contact us:
+
+anapomerash@gmail.com - Anastasia Pomeranets, Senior Developer
