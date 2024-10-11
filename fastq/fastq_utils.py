@@ -28,14 +28,13 @@ def filter_fastq(
         length = len(sequence)
         avg_quality = calculate_avg_quality(quality)
 
-        if not is_within_bounds(gc_content, gc_bounds):
-            continue
-        if not is_within_bounds(length, length_bounds):
-            continue
-        if avg_quality < quality_threshold:
-            continue
-
-        filtered_seqs[name] = (sequence, quality)
+        if (
+    is_within_bounds(gc_content, gc_bounds) and 
+    is_within_bounds(length, length_bounds) and 
+    avg_quality >= quality_threshold
+):
+    # Добавляем последовательность в отфильтрованный список
+    filtered_seqs[name] = (sequence, quality)
 
     return filtered_seqs
 
