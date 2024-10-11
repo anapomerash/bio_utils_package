@@ -17,8 +17,7 @@
 Пакет можно установить, клонировав репозиторий и установив необходимые зависимости.
 
 ```bash
-git clone git@github.com:anapomerash/bio_utils_package.git
-cd bio_utils_package
+git clone git@github.com:anapomerash/bio_utils_package.git && cd bio_utils_package
 ```
 ## Использование
 
@@ -106,4 +105,4 @@ bio_utils_package/
 
 ## Контакты
 Если у вас возникли вопросы или предложения, пожалуйста, свяжитесь с нами:
-anapomerash@gmail.com - Померанец Анастасия, разработчик
+anapomerash@gmail.com - Померанец Анастасия, старший разработчик
