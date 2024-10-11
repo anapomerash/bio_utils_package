@@ -1,5 +1,3 @@
-# translation/translation_utils.py
-
 from typing import Dict
 
 CODON_TABLE: Dict[str, str] = {
@@ -73,24 +71,24 @@ CODON_TABLE: Dict[str, str] = {
 
 def translate_rna(rna_seq: str) -> str:
     """
-    Переводит РНК-последовательность в аминокислотную цепь.
+    Translates an RNA sequence into a chain of amino acids.
 
-    :param rna_seq: Строка с РНК-последовательностью.
-    :return: Строка с аминокислотами.
-    :raises ValueError: Если последовательность
-        содержит недопустимые символы или некорректна.
+    :param rna_seq: A string containing the RNA sequence.
+    :return: A string containing the amino acids.
+    :raises ValueError: If the sequence
+        contains invalid characters or is incorrect.
     """
     if not rna_seq.startswith("AUG"):
-        raise ValueError("РНК-последовательность должна начинаться с 'AUG'.")
+        raise ValueError("The RNA sequence must start with 'AUG'.")
 
     protein = ""
-    # Проходим по последовательности три нуклеотида за раз
+    # Iterate through the sequence three nucleotides at a time
     for i in range(0, len(rna_seq), 3):
         codon = rna_seq[i: i + 3]
         if len(codon) < 3:
-            break  # Окончание последовательности
+            break  # End of sequence
         amino_acid = CODON_TABLE.get(codon.upper(), "X")
         if amino_acid == "*":
-            break  # Стоп кодон
+            break  # Stop codon
         protein += amino_acid
     return protein
