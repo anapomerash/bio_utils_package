@@ -73,9 +73,7 @@ def reverse_complement(sequence: str) -> str:
     :return: Обратная комплементарная последовательность.
     :raises ValueError: Если последовательность содержит недопустимые символы.
     """
-    comp = complement(sequence)
-    reverse_comp = comp[::-1]
-    return reverse_comp
+    return reverse(complement(sequence))
 
 
 def is_valid_seq(sequence: str) -> bool:
