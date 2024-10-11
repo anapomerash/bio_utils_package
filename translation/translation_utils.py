@@ -94,12 +94,3 @@ def translate_rna(rna_seq: str) -> str:
             break  # Стоп кодон
         protein += amino_acid
     return protein
-
-
-def get_codon_table() -> Dict[str, str]:
-    """
-    Возвращает таблицу кодонов.
-
-    :return: Словарь с кодонами и соответствующими аминокислотами.
-    """
-    return CODON_TABLE
